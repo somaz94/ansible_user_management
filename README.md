@@ -56,15 +56,49 @@ As of now, this role doesn't have any dependencies on other Ansible Galaxy roles
 <br/>
 
 ## Example Playbook
+
 Using the role in a playbook:
 
 ```bash
+# site.yml
 - hosts: localhost # or <hosts> (Remote Server)
   become: yes
   vars_files:
-    - ~/vars/main.yml
+    - ~/vars.yml
   roles:
     - somaz94.ansible_user_management
+```
+
+```bash
+# vars.yml
+users_to_create:
+  - name: alice
+    password: "$6$SomeHashedValue..." # hashed_alice_password
+    shell: "/bin/bash"
+  - name: bob
+    password: "$6$SomeHashedValue..." # hashed_bob_password
+    shell: "/bin/zsh"
+  - name: charlie
+    password: "$6$SomeHashedValue..." # hashed_charlie_password
+    shell: "/bin/bash"
+
+users_to_modify:
+  - name: alice
+    password: "$6$SomeNeWHashedValue..." # new_hashed_alice_password
+    shell: "/bin/zsh"
+
+users_to_remove:
+  - charlie
+```
+
+<br/>
+
+## Running the Playbook
+
+Execute the playbook with the following command:
+
+```bash
+ansible-playbook site.yml
 ```
 
 <br/>
