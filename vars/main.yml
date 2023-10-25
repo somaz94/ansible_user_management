@@ -15,9 +15,9 @@
 
 # # Users to modify
 # users_to_modify:
-#   - name: alice
+#   - name: bob
 #     password: "$6$LV4/OSL2Jcaa/$9I8kxUZ6cHCXY1mKEz8AWgs97tJ7xHqdCyFDCykEtm7pIbtAjwkHSM955yLHwPKQ4GMqrZzy2Yj8NisbZUrsB1" # new_hashed_alice_password (mkpasswd -m sha-512 newalice)
-#     shell: "/bin/zsh"
+#     shell: "/bin/bash"
 
 # # Users to remove
 # users_to_remove:

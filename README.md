@@ -83,9 +83,9 @@ users_to_create:
     shell: "/bin/bash"
 
 users_to_modify:
-  - name: alice
+  - name: bob
     password: "$6$SomeNeWHashedValue..." # new_hashed_alice_password
-    shell: "/bin/zsh"
+    shell: "/bin/bash"
 
 users_to_remove:
   - charlie
