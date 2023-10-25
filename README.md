@@ -21,13 +21,6 @@ The following variables can be set to manage users:
 - `users_to_modify`: A list of users you wish to modify.
 - `users_to_remove`: A list of usernames you wish to remove.
 
-```bash
-# defaults/main.yml
-users_to_create: []
-users_to_modify: []
-users_to_remove: []
-```
-
 ### Defined in `vars/main.yml`:
 
 You can define user-specific details like their name, hashed password, and preferred shell.
