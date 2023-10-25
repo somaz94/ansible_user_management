@@ -68,6 +68,8 @@ Using the role in a playbook:
 ```bash
 - hosts: localhost # or <hosts> (Remote Server)
   become: yes
+  vars_files:
+    - ~/vars/main.yml
   roles:
     - somaz94.ansible_user_management
 ```
