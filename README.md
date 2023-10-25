@@ -68,7 +68,7 @@ Using the role in a playbook:
 ```bash
 - hosts: localhost # or <hosts> (Remote Server)
   roles:
-    - ansible_user_management
+    - somaz94.ansible_user_management
 ```
 
 <br/>
