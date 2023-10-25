@@ -1,0 +1,5 @@
+---
+# defaults file for ansible_user_management
+users_to_create: []
+users_to_modify: []
+users_to_remove: []

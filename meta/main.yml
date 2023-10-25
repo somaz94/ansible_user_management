@@ -1,0 +1,30 @@
+---
+galaxy_info:
+  author: somaz
+  description: Ansible role to User Management(Create, Delete, Modify)
+  license: MIT
+  min_ansible_version: 2.9
+  role_name: ansible_user_management
+  namespace: somaz
+  platforms:
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: RHEL
+      versions:
+        - all
+    - name: CentOS
+      versions:
+        - all
+  galaxy_tags:
+    - user_management
+    - create_user
+    - delete_user
+    - modify_user
+
+dependencies: []
+
+

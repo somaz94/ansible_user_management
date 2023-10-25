@@ -1,0 +1,24 @@
+---
+# vars file for ansible_user_management
+
+# Users to create
+users_to_create:
+  - name: alice
+    password: "$6$Bdg2ahrN$d2f2EJIi10alZmjpV70GrbWEtNN/QB32MqEh1eo1G02aHkReocJe/PiFBOH7WAzFK0GJtIOtsxWS0VzqT0Zff/" # hashed_alice_password (mkpasswd -m sha-512 alice)
+    shell: "/bin/bash"
+  - name: bob
+    password: "$6$WJTqU/lADO$k9/zlHqF6qhIFQ/srQ0oqe5ci0tCBnBVfj02pdXxKVLhvMKqQKK4XaaiFi4SzIq9.HRHmwDaTaX.ExkjDGDsS1" # hashed_bob_password (mkpasswd -m sha-512 bob)
+    shell: "/bin/zsh"
+  - name: charlie
+    password: "$6$6a9KpqJ2hAkfYJ7$WUMPacLLZnYMhlPSLYnh9YWHqiSPysMxsRZ6ESXAe2rhO3gJ9nNP0.kbWFWuJ5YZvtGDN./8FtltM2DUjcJjz0" # hashed_charlie_password (mkpasswd -m sha-512 charlie)
+    shell: "/bin/bash"
+
+# Users to modify
+users_to_modify:
+  - name: alice
+    password: "$6$LV4/OSL2Jcaa/$9I8kxUZ6cHCXY1mKEz8AWgs97tJ7xHqdCyFDCykEtm7pIbtAjwkHSM955yLHwPKQ4GMqrZzy2Yj8NisbZUrsB1" # new_hashed_alice_password (mkpasswd -m sha-512 newalice)
+    shell: "/bin/zsh"
+
+# Users to remove
+users_to_remove:
+  - charlie

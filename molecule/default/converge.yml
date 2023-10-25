@@ -1,0 +1,17 @@
+---
+- name: Converge
+  hosts: all
+  become: yes
+  roles:
+    - ansible_user_management
+  vars:
+    users_to_create:
+      - name: testuser1
+        password: "hashed_password1"
+        shell: "/bin/bash"
+    users_to_modify:
+      - name: testuser2
+        password: "new_hashed_password2"
+        shell: "/bin/zsh"
+    users_to_remove:
+      - testuser3

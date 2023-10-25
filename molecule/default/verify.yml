@@ -1,0 +1,24 @@
+---
+- name: Verify user creation
+  hosts: all
+  tasks:
+    - name: Check if bob exists
+      getent:
+        database: passwd
+        key: bob
+      register: bob
+      failed_when: "bob.getent_passwd.bob is none"
+
+    - name: Check if alice exists and has modified properties
+      getent:
+        database: passwd
+        key: alice
+      register: alice
+      failed_when: "alice.getent_passwd.alice is none"
+
+    - name: Check if charlie is removed
+      getent:
+        database: passwd
+        key: charlie
+      register: charlie
+      failed_when: "charlie.getent_passwd.charlie is defined"

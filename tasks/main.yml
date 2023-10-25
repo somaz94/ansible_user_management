@@ -1,0 +1,28 @@
+---
+# tasks file for ansible_user_management
+- name: Create users
+  user:
+    name: "{{ item.name }}"
+    password: "{{ item.password | default(omit) }}"
+    shell: "{{ item.shell | default('/bin/bash') }}"
+    state: present
+  with_items: "{{ users_to_create }}"
+  when: users_to_create is defined
+  # no_log: true # options 
+
+- name: Modify users
+  user:
+    name: "{{ item.name }}"
+    password: "{{ item.password | default(omit) }}"
+    shell: "{{ item.shell | default('/bin/bash') }}"
+    state: present
+  with_items: "{{ users_to_modify }}"
+  when: users_to_modify is defined
+  # no_log: true # options 
+
+- name: Remove users
+  user:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ users_to_remove }}"
+  when: users_to_remove is defined
