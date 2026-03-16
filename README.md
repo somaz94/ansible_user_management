@@ -3,6 +3,7 @@
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-somaz94.ansible__user__management-blue.svg)](https://galaxy.ansible.com/ui/standalone/roles/somaz94/ansible_user_management/)
 [![Molecule Test](https://github.com/somaz94/ansible_user_management/actions/workflows/molecule-test.yml/badge.svg)](https://github.com/somaz94/ansible_user_management/actions/workflows/molecule-test.yml)
 [![Release](https://github.com/somaz94/ansible_user_management/actions/workflows/release.yml/badge.svg)](https://github.com/somaz94/ansible_user_management/actions/workflows/release.yml)
+[![Galaxy Publish](https://github.com/somaz94/ansible_user_management/actions/workflows/galaxy-publish.yml/badge.svg)](https://github.com/somaz94/ansible_user_management/actions/workflows/galaxy-publish.yml)
 [![GitHub tag](https://img.shields.io/github/v/tag/somaz94/ansible_user_management)](https://github.com/somaz94/ansible_user_management/tags)
 [![License](https://img.shields.io/github/license/somaz94/ansible_user_management)](LICENSE)
 
