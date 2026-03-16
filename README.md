@@ -1,104 +1,134 @@
-# Role Name
+# Ansible User Management
 
-ansible_user_management
+[![Ansible Galaxy](https://img.shields.io/badge/galaxy-somaz94.ansible__user__management-blue.svg)](https://galaxy.ansible.com/ui/standalone/roles/somaz94/ansible_user_management/)
+[![Molecule Test](https://github.com/somaz94/ansible_user_management/actions/workflows/molecule-test.yml/badge.svg)](https://github.com/somaz94/ansible_user_management/actions/workflows/molecule-test.yml)
+[![Release](https://github.com/somaz94/ansible_user_management/actions/workflows/release.yml/badge.svg)](https://github.com/somaz94/ansible_user_management/actions/workflows/release.yml)
+[![GitHub tag](https://img.shields.io/github/v/tag/somaz94/ansible_user_management)](https://github.com/somaz94/ansible_user_management/tags)
+[![License](https://img.shields.io/github/license/somaz94/ansible_user_management)](LICENSE)
 
-This Ansible role facilitates user management tasks such as creating, modifying, and removing users on a Unix/Linux system.
+An Ansible role for managing users on Unix/Linux systems — create, modify, and remove user accounts.
 
 <br/>
 
 ## Requirements
 
-This role does not have any pre-requisites other than a standard Ansible setup. The target system should have the necessary privileges to create, modify, or delete user accounts.
+- Ansible 2.9+
+- Supported OS: Ubuntu 22.04+, Debian 11+, Rocky Linux 9+, Fedora 40+
+
+<br/>
+
+## Installation
+
+```bash
+ansible-galaxy role install somaz94.ansible_user_management
+```
 
 <br/>
 
 ## Role Variables
 
-The following variables can be set to manage users:
-
 ### Defined in `defaults/main.yml`:
-- `users_to_create`: A list of users you wish to create.
-- `users_to_modify`: A list of users you wish to modify.
-- `users_to_remove`: A list of usernames you wish to remove.
 
-### Defined in `vars/main.yml`:
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `users_to_create` | List of users to create | `[]` |
+| `users_to_modify` | List of users to modify | `[]` |
+| `users_to_remove` | List of usernames to remove | `[]` |
 
-You can define user-specific details like their name, hashed password, and preferred shell.
+### User object properties:
 
-```bash
-# vars/main.yml
+| Property | Description | Default |
+|----------|-------------|---------|
+| `name` | Username (required) | - |
+| `password` | SHA-512 hashed password | omit |
+| `shell` | Login shell | `/bin/bash` |
+
+<br/>
+
+## Usage
+
+### Variables
+
+```yaml
+# vars.yml
 users_to_create:
   - name: alice
-    password: "$6$SomeHashedValue..." # hashed_alice_password
+    password: "$6$SomeHashedValue..."
     shell: "/bin/bash"
   - name: bob
-    password: "$6$SomeHashedValue..." # hashed_bob_password
+    password: "$6$SomeHashedValue..."
     shell: "/bin/zsh"
-  - name: charlie
-    password: "$6$SomeHashedValue..." # hashed_charlie_password
-    shell: "/bin/bash"
 
 users_to_modify:
   - name: alice
-    password: "$6$SomeNeWHashedValue..." # new_hashed_alice_password
     shell: "/bin/zsh"
 
 users_to_remove:
   - charlie
 ```
 
-<br/>
+### Playbook
 
-## Dependencies
-
-As of now, this role doesn't have any dependencies on other Ansible Galaxy roles.
-
-<br/>
-
-## Example Playbook
-
-Using the role in a playbook:
-
-```bash
+```yaml
 # site.yml
-- hosts: localhost # or <hosts> (Remote Server)
-  become: yes
+---
+- hosts: localhost
+  become: true
   vars_files:
-    - ~/vars.yml
+    - vars.yml
   roles:
     - somaz94.ansible_user_management
 ```
 
 ```bash
-# vars.yml
-users_to_create:
-  - name: alice
-    password: "$6$SomeHashedValue..." # hashed_alice_password
-    shell: "/bin/bash"
-  - name: bob
-    password: "$6$SomeHashedValue..." # hashed_bob_password
-    shell: "/bin/zsh"
-  - name: charlie
-    password: "$6$SomeHashedValue..." # hashed_charlie_password
-    shell: "/bin/bash"
+ansible-playbook site.yml
+```
 
-users_to_modify:
-  - name: bob
-    password: "$6$SomeNeWHashedValue..." # new_hashed_alice_password
-    shell: "/bin/bash"
+### Running Remotely
 
-users_to_remove:
-  - charlie
+```ini
+# inventory.ini
+[servers]
+my-server ansible_ssh_user=somaz ansible_ssh_private_key_file=~/.ssh/id_rsa
+```
+
+```yaml
+# site.yml
+---
+- hosts: servers
+  become: true
+  vars_files:
+    - vars.yml
+  roles:
+    - somaz94.ansible_user_management
+```
+
+```bash
+ansible-playbook -i inventory.ini site.yml
 ```
 
 <br/>
 
-## Running the Playbook
+## Development
 
-Execute the playbook with the following command:
+### Prerequisites
+
+- Python 3.x
+- Docker (for Molecule testing)
+
+### Quick Start
 
 ```bash
-ansible-playbook site.yml
+make venv                          # Create venv and install dependencies
+make test                          # Full molecule test (default: ubuntu2204)
+make test DISTRO=ubuntu2404        # Test with Ubuntu 24.04
+make test DISTRO=debian12          # Test with Debian 12
+make test DISTRO=rockylinux9       # Test with Rocky Linux 9
+make converge                      # Apply role only
+make verify                        # Run verification only
+make destroy                       # Destroy test instances
+make lint                          # Run ansible-lint
+make clean                         # Remove venv and build artifacts
 ```
 
 <br/>
@@ -106,12 +136,3 @@ ansible-playbook site.yml
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-<br/>
-
-## Author Information
-
-- somaz94
-- genius5711@gmail.com
-- https://github.com/somaz94
-

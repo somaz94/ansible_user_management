@@ -1,24 +1,37 @@
 ---
-- name: Verify user creation
+- name: Verify
   hosts: all
   tasks:
-    - name: Check if bob exists
+    - name: Check if testuser1 exists
       getent:
         database: passwd
-        key: bob
-      register: bob
-      failed_when: "bob.getent_passwd.bob is none"
+        key: testuser1
+      register: testuser1_result
 
-    - name: Check if alice exists and has modified properties
-      getent:
-        database: passwd
-        key: alice
-      register: alice
-      failed_when: "alice.getent_passwd.alice is none"
+    - name: Verify testuser1 exists
+      assert:
+        that:
+          - testuser1_result.ansible_facts.getent_passwd.testuser1 is defined
 
-    - name: Check if charlie is removed
+    - name: Check if testuser2 exists
       getent:
         database: passwd
-        key: charlie
-      register: charlie
-      failed_when: "charlie.getent_passwd.charlie is defined"
+        key: testuser2
+      register: testuser2_result
+
+    - name: Verify testuser2 exists
+      assert:
+        that:
+          - testuser2_result.ansible_facts.getent_passwd.testuser2 is defined
+
+    - name: Check if testuser3 is removed
+      getent:
+        database: passwd
+        key: testuser3
+      register: testuser3_result
+      failed_when: false
+
+    - name: Verify testuser3 is removed
+      assert:
+        that:
+          - testuser3_result.ansible_facts.getent_passwd.testuser3 is not defined
