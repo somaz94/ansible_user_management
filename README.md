@@ -28,6 +28,8 @@ ansible-galaxy role install somaz94.ansible_user_management
 
 ## Role Variables
 
+<br/>
+
 ### Defined in `defaults/main.yml`:
 
 | Variable | Description | Default |
@@ -35,6 +37,8 @@ ansible-galaxy role install somaz94.ansible_user_management
 | `users_to_create` | List of users to create | `[]` |
 | `users_to_modify` | List of users to modify | `[]` |
 | `users_to_remove` | List of usernames to remove | `[]` |
+
+<br/>
 
 ### User object properties:
 
