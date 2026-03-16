@@ -2,6 +2,17 @@
 - name: Converge
   hosts: all
   become: true
+  vars:
+    users_to_create:
+      - name: testuser1
+        shell: "/bin/bash"
+      - name: testuser2
+        shell: "/bin/bash"
+    users_to_modify:
+      - name: testuser1
+        shell: "/bin/sh"
+    users_to_remove:
+      - testuser3
 
   pre_tasks:
     - name: Create testuser3 for removal test
@@ -11,16 +22,3 @@
 
   roles:
     - role: ansible_user_management
-      vars:
-        users_to_create:
-          - name: testuser1
-            password: "{{ 'password123' | password_hash('sha512') }}"
-            shell: "/bin/bash"
-          - name: testuser2
-            password: "{{ 'password456' | password_hash('sha512') }}"
-            shell: "/bin/bash"
-        users_to_modify:
-          - name: testuser1
-            shell: "/bin/sh"
-        users_to_remove:
-          - testuser3
