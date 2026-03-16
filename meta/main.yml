@@ -5,7 +5,6 @@ galaxy_info:
   license: MIT
   min_ansible_version: "2.9"
   role_name: ansible_user_management
-  namespace: somaz
   platforms:
     - name: Debian
       versions:
@@ -20,9 +19,9 @@ galaxy_info:
       versions:
         - all
   galaxy_tags:
-    - user_management
-    - create_user
-    - delete_user
-    - modify_user
+    - usermanagement
+    - createuser
+    - deleteuser
+    - modifyuser
 
 dependencies: []

@@ -4,23 +4,28 @@
   gather_facts: false
   tasks:
     - name: Fix PAM configuration for Docker containers (RedHat family)
-      raw: |
+      ansible.builtin.raw: |
         if [ -f /etc/pam.d/system-auth ]; then
           cp /etc/pam.d/system-auth /etc/pam.d/system-auth.bak
-          echo -e "auth sufficient pam_permit.so\naccount sufficient pam_permit.so\npassword sufficient pam_permit.so\nsession sufficient pam_permit.so" > /etc/pam.d/system-auth
+          cat > /etc/pam.d/system-auth <<PAM
+        auth sufficient pam_permit.so
+        account sufficient pam_permit.so
+        password sufficient pam_permit.so
+        session sufficient pam_permit.so
+        PAM
         fi
       changed_when: false
 
     - name: Gather facts after PAM fix
-      setup:
+      ansible.builtin.setup:
 
     - name: Create testuser3 for removal test
-      user:
+      ansible.builtin.user:
         name: testuser3
         state: present
 
     - name: Create testuser4 for modification test
-      user:
+      ansible.builtin.user:
         name: testuser4
         shell: "/bin/bash"
         state: present

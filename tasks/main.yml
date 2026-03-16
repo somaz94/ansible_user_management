@@ -1,6 +1,6 @@
 ---
 - name: Create users
-  user:
+  ansible.builtin.user:
     name: "{{ item.name }}"
     password: "{{ item.password | default(omit) }}"
     shell: "{{ item.shell | default('/bin/bash') }}"
@@ -9,7 +9,7 @@
   when: users_to_create | length > 0
 
 - name: Modify users
-  user:
+  ansible.builtin.user:
     name: "{{ item.name }}"
     password: "{{ item.password | default(omit) }}"
     shell: "{{ item.shell | default(omit) }}"
@@ -18,7 +18,7 @@
   when: users_to_modify | length > 0
 
 - name: Remove users
-  user:
+  ansible.builtin.user:
     name: "{{ item }}"
     state: absent
     remove: true

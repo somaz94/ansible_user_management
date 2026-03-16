@@ -3,27 +3,27 @@
   hosts: all
   tasks:
     - name: Check if testuser1 exists
-      command: id testuser1
+      ansible.builtin.command: id testuser1
       register: testuser1_result
       changed_when: false
 
     - name: Check if testuser2 exists
-      command: id testuser2
+      ansible.builtin.command: id testuser2
       register: testuser2_result
       changed_when: false
 
     - name: Check testuser4 shell is modified
-      command: getent passwd testuser4
+      ansible.builtin.command: getent passwd testuser4
       register: testuser4_passwd
       changed_when: false
 
     - name: Assert testuser4 shell is /bin/sh
-      assert:
+      ansible.builtin.assert:
         that:
           - "'/bin/sh' in testuser4_passwd.stdout"
 
     - name: Check if testuser3 is removed
-      command: id testuser3
+      ansible.builtin.command: id testuser3
       register: testuser3_result
       failed_when: testuser3_result.rc == 0
       changed_when: false
