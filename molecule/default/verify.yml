@@ -7,20 +7,20 @@
       register: testuser1_result
       changed_when: false
 
-    - name: Verify testuser1 shell is modified
-      command: getent passwd testuser1
-      register: testuser1_passwd
-      changed_when: false
-
-    - name: Assert testuser1 shell is /bin/sh
-      assert:
-        that:
-          - "'/bin/sh' in testuser1_passwd.stdout"
-
     - name: Check if testuser2 exists
       command: id testuser2
       register: testuser2_result
       changed_when: false
+
+    - name: Check testuser4 shell is modified
+      command: getent passwd testuser4
+      register: testuser4_passwd
+      changed_when: false
+
+    - name: Assert testuser4 shell is /bin/sh
+      assert:
+        that:
+          - "'/bin/sh' in testuser4_passwd.stdout"
 
     - name: Check if testuser3 is removed
       command: id testuser3

@@ -9,16 +9,10 @@
       - name: testuser2
         shell: "/bin/bash"
     users_to_modify:
-      - name: testuser1
+      - name: testuser4
         shell: "/bin/sh"
     users_to_remove:
       - testuser3
-
-  pre_tasks:
-    - name: Create testuser3 for removal test
-      user:
-        name: testuser3
-        state: present
 
   roles:
     - role: ansible_user_management

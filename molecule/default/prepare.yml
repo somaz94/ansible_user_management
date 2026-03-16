@@ -13,3 +13,14 @@
 
     - name: Gather facts after PAM fix
       setup:
+
+    - name: Create testuser3 for removal test
+      user:
+        name: testuser3
+        state: present
+
+    - name: Create testuser4 for modification test
+      user:
+        name: testuser4
+        shell: "/bin/bash"
+        state: present
