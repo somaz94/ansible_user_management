@@ -47,6 +47,8 @@ ansible-galaxy role install somaz94.ansible_user_management
 
 ## Usage
 
+<br/>
+
 ### Variables
 
 ```yaml
@@ -67,6 +69,8 @@ users_to_remove:
   - charlie
 ```
 
+<br/>
+
 ### Playbook
 
 ```yaml
@@ -83,6 +87,8 @@ users_to_remove:
 ```bash
 ansible-playbook site.yml
 ```
+
+<br/>
 
 ### Running Remotely
 
@@ -111,10 +117,14 @@ ansible-playbook -i inventory.ini site.yml
 
 ## Development
 
+<br/>
+
 ### Prerequisites
 
 - Python 3.x
 - Docker (for Molecule testing)
+
+<br/>
 
 ### Quick Start
 

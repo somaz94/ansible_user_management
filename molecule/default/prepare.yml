@@ -1,0 +1,15 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Fix PAM configuration for Docker containers (RedHat family)
+      raw: |
+        if [ -f /etc/pam.d/system-auth ]; then
+          cp /etc/pam.d/system-auth /etc/pam.d/system-auth.bak
+          echo -e "auth sufficient pam_permit.so\naccount sufficient pam_permit.so\npassword sufficient pam_permit.so\nsession sufficient pam_permit.so" > /etc/pam.d/system-auth
+        fi
+      changed_when: false
+
+    - name: Gather facts after PAM fix
+      setup:
