@@ -5,6 +5,7 @@ Ansible role for managing user accounts (create, modify, remove) on Linux system
 ## Commit Guidelines
 
 - Do not include `Co-Authored-By` lines in commit messages.
+- Do not push to remote. Only commit. The user will push manually.
 
 ## Project Structure
 
@@ -49,3 +50,4 @@ ansible-playbook site.yml
 ## Language
 
 - Communicate with the user in Korean.
+- All documentation and code comments must be written in English.
