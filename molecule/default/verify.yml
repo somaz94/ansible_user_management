@@ -12,6 +12,27 @@
       register: testuser2_result
       changed_when: false
 
+    - name: Verify testuser1 shell
+      ansible.builtin.command: getent passwd testuser1
+      register: testuser1_passwd
+      changed_when: false
+
+    - name: Assert testuser1 shell is /bin/bash
+      ansible.builtin.assert:
+        that:
+          - "'/bin/bash' in testuser1_passwd.stdout"
+
+    - name: Verify testuser1 home directory exists
+      ansible.builtin.stat:
+        path: /home/testuser1
+      register: testuser1_home
+
+    - name: Assert testuser1 home directory exists
+      ansible.builtin.assert:
+        that:
+          - testuser1_home.stat.exists
+          - testuser1_home.stat.isdir
+
     - name: Check testuser4 shell is modified
       ansible.builtin.command: getent passwd testuser4
       register: testuser4_passwd
@@ -27,3 +48,13 @@
       register: testuser3_result
       failed_when: testuser3_result.rc == 0
       changed_when: false
+
+    - name: Verify testuser3 home directory is removed
+      ansible.builtin.stat:
+        path: /home/testuser3
+      register: testuser3_home
+
+    - name: Assert testuser3 home directory does not exist
+      ansible.builtin.assert:
+        that:
+          - not testuser3_home.stat.exists

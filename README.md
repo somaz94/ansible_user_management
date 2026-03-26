@@ -45,8 +45,14 @@ ansible-galaxy role install somaz94.ansible_user_management
 | Property | Description | Default |
 |----------|-------------|---------|
 | `name` | Username (required) | - |
-| `password` | SHA-512 hashed password | omit |
-| `shell` | Login shell | `/bin/bash` |
+| `password` | SHA-512 hashed password (see below) | omit |
+| `shell` | Login shell (must be absolute path) | `/bin/bash` |
+
+> **Password hashing:** Generate a SHA-512 hashed password using:
+> ```bash
+> mkpasswd -m sha-512 'your-password'
+> ```
+> Passwords are handled with `no_log: true` to prevent hash exposure in logs.
 
 <br/>
 
@@ -100,7 +106,7 @@ ansible-playbook site.yml
 ```ini
 # inventory.ini
 [servers]
-my-server ansible_ssh_user=somaz ansible_ssh_private_key_file=~/.ssh/id_rsa
+my-server ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
 ```
 
 ```yaml

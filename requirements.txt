@@ -1,5 +1,5 @@
-ansible-core
-molecule
-molecule-plugins[docker]
-docker
-ansible-lint
+ansible-core>=2.15,<3.0
+molecule>=6.0,<7.0
+molecule-plugins[docker]>=23.0
+docker>=7.0
+ansible-lint>=6.0
