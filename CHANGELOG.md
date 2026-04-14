@@ -6,6 +6,7 @@
 
 **Merged pull requests:**
 
+- chore\(deps\): bump actions/github-script from 8 to 9 [\#2](https://github.com/somaz94/ansible_user_management/pull/2) ([dependabot[bot]](https://github.com/apps/dependabot))
 - chore\(deps\): bump dependabot/fetch-metadata from 2 to 3 [\#1](https://github.com/somaz94/ansible_user_management/pull/1) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [v1.0.2](https://github.com/somaz94/ansible_user_management/tree/v1.0.2) (2026-03-26)
