@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.0.2](https://github.com/somaz94/ansible_user_management/tree/v1.0.2) (2026-04-14)
+
+[Full Changelog](https://github.com/somaz94/ansible_user_management/compare/v1.0.2...v1.0.2)
+
+**Merged pull requests:**
+
+- chore\(deps\): bump dependabot/fetch-metadata from 2 to 3 [\#1](https://github.com/somaz94/ansible_user_management/pull/1) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v1.0.2](https://github.com/somaz94/ansible_user_management/tree/v1.0.2) (2026-03-26)
 
 [Full Changelog](https://github.com/somaz94/ansible_user_management/compare/v1.0.1...v1.0.2)
