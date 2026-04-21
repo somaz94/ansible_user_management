@@ -5,25 +5,25 @@ on:
     tags:
       - "v*"
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry-run (validate inputs, skip role import)"
+        required: false
+        default: "false"
+
+permissions:
+  contents: read
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
+      - uses: somaz94/ansible-galaxy-publish-action@v1
         with:
-          python-version: "3.x"
-
-      - name: Install Ansible
-        run: pip install ansible
-
-      - name: Import role to Ansible Galaxy
-        run: >
-          ansible-galaxy role import
-          --api-key ${{ secrets.GALAXY_API_KEY }}
-          somaz94 ansible_user_management
+          type: role
+          api_key: ${{ secrets.GALAXY_API_KEY }}
+          namespace: somaz94
+          name: ansible_user_management
+          dry_run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || 'false' }}
