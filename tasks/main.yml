@@ -2,23 +2,33 @@
 - name: Validate users_to_create input
   ansible.builtin.assert:
     that:
-      - item.name is match('^[a-zA-Z0-9._-]+$')
+      - item.name is match('^[a-z_][a-z0-9_-]*[$]?$')
       - item.name | length <= 32
       - item.shell | default('/bin/bash') is match('^/[a-zA-Z0-9/_.-]+$')
     fail_msg: "Invalid user input: name='{{ item.name }}'"
     quiet: true
   loop: "{{ users_to_create }}"
-  when: users_to_create | length > 0
 
 - name: Validate users_to_modify input
   ansible.builtin.assert:
     that:
-      - item.name is match('^[a-zA-Z0-9._-]+$')
+      - item.name is match('^[a-z_][a-z0-9_-]*[$]?$')
       - item.name | length <= 32
+      - item.shell | default('/bin/bash') is match('^/[a-zA-Z0-9/_.-]+$')
     fail_msg: "Invalid user input: name='{{ item.name }}'"
     quiet: true
   loop: "{{ users_to_modify }}"
-  when: users_to_modify | length > 0
+
+- name: Validate users_to_remove input
+  ansible.builtin.assert:
+    that:
+      - item is string
+      - item is match('^[a-z_][a-z0-9_-]*[$]?$')
+      - item | length <= 32
+      - item not in protected_users
+    fail_msg: "Invalid or protected username: '{{ item }}'"
+    quiet: true
+  loop: "{{ users_to_remove }}"
 
 - name: Create users
   ansible.builtin.user:
@@ -27,7 +37,6 @@
     shell: "{{ item.shell | default('/bin/bash') }}"
     state: present
   loop: "{{ users_to_create }}"
-  when: users_to_create | length > 0
   no_log: true
 
 - name: Modify users
@@ -37,7 +46,6 @@
     shell: "{{ item.shell | default(omit) }}"
     state: present
   loop: "{{ users_to_modify }}"
-  when: users_to_modify | length > 0
   no_log: true
 
 - name: Remove users
@@ -46,4 +54,4 @@
     state: absent
     remove: true
   loop: "{{ users_to_remove }}"
-  when: users_to_remove | length > 0
+  no_log: true

@@ -1,23 +1,23 @@
 ---
 - name: Prepare
   hosts: all
-  gather_facts: false
+  become: true
+  gather_facts: true
   tasks:
-    - name: Fix PAM configuration for Docker containers (RedHat family)
-      ansible.builtin.raw: |
-        if [ -f /etc/pam.d/system-auth ]; then
+    - name: Loosen password-quality checks for container testing (RedHat family)
+      ansible.builtin.shell: |
+        set -euo pipefail
+        if [ -f /etc/pam.d/system-auth ] && [ ! -f /etc/pam.d/system-auth.bak ]; then
           cp /etc/pam.d/system-auth /etc/pam.d/system-auth.bak
-          cat > /etc/pam.d/system-auth <<PAM
-        auth sufficient pam_permit.so
-        account sufficient pam_permit.so
-        password sufficient pam_permit.so
-        session sufficient pam_permit.so
-        PAM
+          sed -i 's/^password.*pam_pwquality\.so.*$/password    sufficient    pam_permit.so/' /etc/pam.d/system-auth
+          sed -i 's/^password.*pam_unix\.so.*$/password    sufficient    pam_unix.so sha512 nullok/' /etc/pam.d/system-auth
+          echo "patched"
         fi
-      changed_when: false
-
-    - name: Gather facts after PAM fix
-      ansible.builtin.setup:
+      args:
+        creates: /etc/pam.d/system-auth.bak
+      register: pam_patch
+      changed_when: pam_patch.stdout is search('patched')
+      when: ansible_os_family == 'RedHat'
 
     - name: Create testuser3 for removal test
       ansible.builtin.user:

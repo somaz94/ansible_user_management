@@ -13,8 +13,8 @@ An Ansible role for managing users on Unix/Linux systems — create, modify, and
 
 ## Requirements
 
-- Ansible 2.9+
-- Supported OS: Ubuntu 22.04+, Debian 11+, Rocky Linux 9+, Fedora 40+
+- Ansible 2.15+ (ansible-core)
+- Supported OS: Ubuntu 22.04 / 24.04, Debian 12, Rocky Linux 9, Fedora 40
 
 <br/>
 
@@ -53,6 +53,13 @@ ansible-galaxy role install somaz94.ansible_user_management
 > mkpasswd -m sha-512 'your-password'
 > ```
 > Passwords are handled with `no_log: true` to prevent hash exposure in logs.
+
+> **Protected users:** This role refuses to remove a hardcoded list of system accounts
+> (`root`, `sshd`, `daemon`, ...) defined in `vars/main.yml`. Attempting to include
+> any of these in `users_to_remove` will fail the validation assert before any user
+> module call.
+>
+> `users_to_remove` is a **list of plain usernames** (strings), not user-object dicts.
 
 <br/>
 

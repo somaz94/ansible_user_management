@@ -5,6 +5,9 @@ __pycache__/
 .venv/
 venv/
 
+# Ansible
+.ansible/
+
 # Molecule
 .cache/
 .molecule/

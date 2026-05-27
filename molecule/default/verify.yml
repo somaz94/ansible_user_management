@@ -1,60 +1,64 @@
 ---
 - name: Verify
   hosts: all
+  become: true
   tasks:
-    - name: Check if testuser1 exists
-      ansible.builtin.command: id testuser1
-      register: testuser1_result
-      changed_when: false
-
-    - name: Check if testuser2 exists
-      ansible.builtin.command: id testuser2
-      register: testuser2_result
-      changed_when: false
-
-    - name: Verify testuser1 shell
+    - name: Read testuser1 passwd entry
       ansible.builtin.command: getent passwd testuser1
       register: testuser1_passwd
       changed_when: false
 
-    - name: Assert testuser1 shell is /bin/bash
-      ansible.builtin.assert:
-        that:
-          - "'/bin/bash' in testuser1_passwd.stdout"
+    - name: Read testuser2 passwd entry
+      ansible.builtin.command: getent passwd testuser2
+      register: testuser2_passwd
+      changed_when: false
 
-    - name: Verify testuser1 home directory exists
-      ansible.builtin.stat:
-        path: /home/testuser1
-      register: testuser1_home
-
-    - name: Assert testuser1 home directory exists
-      ansible.builtin.assert:
-        that:
-          - testuser1_home.stat.exists
-          - testuser1_home.stat.isdir
-
-    - name: Check testuser4 shell is modified
+    - name: Read testuser4 passwd entry
       ansible.builtin.command: getent passwd testuser4
       register: testuser4_passwd
       changed_when: false
 
-    - name: Assert testuser4 shell is /bin/sh
+    - name: Stat testuser1 home directory
+      ansible.builtin.stat:
+        path: /home/testuser1
+      register: testuser1_home
+
+    - name: Stat testuser2 home directory
+      ansible.builtin.stat:
+        path: /home/testuser2
+      register: testuser2_home
+
+    - name: Stat testuser4 home directory
+      ansible.builtin.stat:
+        path: /home/testuser4
+      register: testuser4_home
+
+    - name: Assert created users have correct shell and home
+      ansible.builtin.assert:
+        that:
+          - "'/bin/bash' in testuser1_passwd.stdout"
+          - testuser1_home.stat.exists and testuser1_home.stat.isdir
+          - "'/bin/bash' in testuser2_passwd.stdout"
+          - testuser2_home.stat.exists and testuser2_home.stat.isdir
+
+    - name: Assert modified user has new shell and preserved home
       ansible.builtin.assert:
         that:
           - "'/bin/sh' in testuser4_passwd.stdout"
+          - testuser4_home.stat.exists and testuser4_home.stat.isdir
 
-    - name: Check if testuser3 is removed
-      ansible.builtin.command: id testuser3
+    - name: Check testuser3 is removed from passwd database
+      ansible.builtin.command: getent passwd testuser3
       register: testuser3_result
       failed_when: testuser3_result.rc == 0
       changed_when: false
 
-    - name: Verify testuser3 home directory is removed
+    - name: Stat testuser3 home directory
       ansible.builtin.stat:
         path: /home/testuser3
       register: testuser3_home
 
-    - name: Assert testuser3 home directory does not exist
+    - name: Assert removed user's home directory is gone
       ansible.builtin.assert:
         that:
           - not testuser3_home.stat.exists

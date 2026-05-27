@@ -1,3 +1,7 @@
+SHELL := /bin/bash
+.SHELLFLAGS := -eu -o pipefail -c
+.DEFAULT_GOAL := help
+
 .PHONY: help venv test create converge verify destroy lint clean
 
 VENV := .venv
@@ -7,7 +11,6 @@ $(VENV)/bin/activate: requirements.txt
 	python3 -m venv $(VENV)
 	$(VENV)/bin/pip install --upgrade pip
 	$(VENV)/bin/pip install -r requirements.txt
-	@touch $(VENV)/bin/activate
 
 venv: $(VENV)/bin/activate ## Create virtual environment and install dependencies
 
@@ -30,7 +33,9 @@ destroy: venv ## Destroy molecule test instances
 	MOLECULE_DISTRO=$(DISTRO) $(VENV)/bin/molecule destroy
 
 lint: venv ## Run ansible-lint
-	$(VENV)/bin/ansible-lint
+	ANSIBLE_ROLES_PATH=$(CURDIR)/.. $(VENV)/bin/ansible-lint
 
 clean: ## Remove build artifacts and virtual environment
 	rm -rf $(VENV) .cache .molecule
+	find . -name '*.retry' -delete
+	find . -name '__pycache__' -type d -exec rm -rf {} +

@@ -1,28 +1,33 @@
-# ---
-# # vars file for ansible_user_management
-
-# # Users to create
-# users_to_create:
-#   - name: alice
-#     # hashed_alice_password (mkpasswd -m sha-512 alice)
-#     password: "$6$Bdg2ahrN$d2f2EJIi10alZmjpV70Grb..."
-#     shell: "/bin/bash"
-#   - name: bob
-#     # hashed_bob_password (mkpasswd -m sha-512 bob)
-#     password: "$6$WJTqU/lADO$k9/zlHqF6qhIFQ/srQ0oqe..."
-#     shell: "/bin/zsh"
-#   - name: charlie
-#     # hashed_charlie_password (mkpasswd -m sha-512 charlie)
-#     password: "$6$6a9KpqJ2hAkfYJ7$WUMPacLLZnYMhlPSLYnh..."
-#     shell: "/bin/bash"
-
-# # Users to modify
-# users_to_modify:
-#   - name: bob
-#     # new_hashed_alice_password (mkpasswd -m sha-512 newalice)
-#     password: "$6$LV4/OSL2Jcaa/$9I8kxUZ6cHCXY1mKEz8A..."
-#     shell: "/bin/bash"
-
-# # Users to remove
-# users_to_remove:
-#   - charlie
+---
+# Role-internal: system usernames that must never be removed by this role.
+# Defined here (not in defaults/) so consumers cannot accidentally override
+# the guard list and request removal of a critical system user.
+protected_users:
+  - root
+  - daemon
+  - bin
+  - sys
+  - sync
+  - games
+  - man
+  - lp
+  - mail
+  - news
+  - uucp
+  - proxy
+  - www-data
+  - backup
+  - list
+  - irc
+  - gnats
+  - nobody
+  - systemd-network
+  - systemd-resolve
+  - messagebus
+  - sshd
+  - operator
+  - shutdown
+  - halt
+  - adm
+  - polkitd
+  - dbus
