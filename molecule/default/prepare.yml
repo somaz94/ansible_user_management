@@ -3,12 +3,21 @@
   hosts: all
   gather_facts: false
   tasks:
-    - name: Loosen password-quality checks (RedHat family, container testing)
+    # NOTE: This permits-all PAM rewrite is scoped to ephemeral molecule
+    # containers (geerlingguy/docker-*-ansible) used only by `make test`.
+    # The RHEL/Rocky9 minimal image lacks sssd, so a narrow password-stack
+    # patch is not enough — sudo's `account` lookup also fails. Containers
+    # are destroyed after each test run.
+    - name: Loosen PAM stack for container testing (RedHat family)
       ansible.builtin.raw: |
         if [ -f /etc/pam.d/system-auth ] && [ ! -f /etc/pam.d/system-auth.bak ]; then
           cp /etc/pam.d/system-auth /etc/pam.d/system-auth.bak
-          sed -i 's/^password.*pam_pwquality\.so.*$/password    sufficient    pam_permit.so/' /etc/pam.d/system-auth
-          sed -i 's/^password.*pam_unix\.so.*$/password    sufficient    pam_unix.so sha512 nullok/' /etc/pam.d/system-auth
+          cat > /etc/pam.d/system-auth <<'PAM'
+        auth sufficient pam_permit.so
+        account sufficient pam_permit.so
+        password sufficient pam_permit.so
+        session sufficient pam_permit.so
+        PAM
           echo "patched"
         fi
       register: pam_patch
