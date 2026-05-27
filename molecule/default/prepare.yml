@@ -1,23 +1,21 @@
 ---
 - name: Prepare
   hosts: all
-  become: true
-  gather_facts: true
+  gather_facts: false
   tasks:
-    - name: Loosen password-quality checks for container testing (RedHat family)
-      ansible.builtin.shell: |
-        set -euo pipefail
+    - name: Loosen password-quality checks (RedHat family, container testing)
+      ansible.builtin.raw: |
         if [ -f /etc/pam.d/system-auth ] && [ ! -f /etc/pam.d/system-auth.bak ]; then
           cp /etc/pam.d/system-auth /etc/pam.d/system-auth.bak
           sed -i 's/^password.*pam_pwquality\.so.*$/password    sufficient    pam_permit.so/' /etc/pam.d/system-auth
           sed -i 's/^password.*pam_unix\.so.*$/password    sufficient    pam_unix.so sha512 nullok/' /etc/pam.d/system-auth
           echo "patched"
         fi
-      args:
-        creates: /etc/pam.d/system-auth.bak
       register: pam_patch
-      changed_when: pam_patch.stdout is search('patched')
-      when: ansible_os_family == 'RedHat'
+      changed_when: "'patched' in (pam_patch.stdout | default(''))"
+
+    - name: Gather facts after PAM patch
+      ansible.builtin.setup:
 
     - name: Create testuser3 for removal test
       ansible.builtin.user:
