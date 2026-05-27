@@ -1,8 +1,8 @@
 # Changelog
 
-## [v1.0.2](https://github.com/somaz94/ansible_user_management/tree/v1.0.2) (2026-04-14)
+## [v1.1.0](https://github.com/somaz94/ansible_user_management/tree/v1.1.0) (2026-05-27)
 
-[Full Changelog](https://github.com/somaz94/ansible_user_management/compare/v1.0.2...v1.0.2)
+[Full Changelog](https://github.com/somaz94/ansible_user_management/compare/v1.0.2...v1.1.0)
 
 **Merged pull requests:**
 
