@@ -42,7 +42,7 @@ jobs:
           - debian12
           - rockylinux9
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: somaz94/ansible-molecule-test-action@v1
         with:
