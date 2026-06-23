@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.1.0](https://github.com/somaz94/ansible_user_management/tree/v1.1.0) (2026-06-23)
+
+[Full Changelog](https://github.com/somaz94/ansible_user_management/compare/v1.1.0...v1.1.0)
+
+**Merged pull requests:**
+
+- chore\(deps\): bump actions/checkout from 6 to 7 [\#4](https://github.com/somaz94/ansible_user_management/pull/4) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v1.1.0](https://github.com/somaz94/ansible_user_management/tree/v1.1.0) (2026-05-27)
 
 [Full Changelog](https://github.com/somaz94/ansible_user_management/compare/v1.0.2...v1.1.0)
